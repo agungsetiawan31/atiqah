@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Brankas Rahasia ❤️</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Courier New', monospace;
+  background: radial-gradient(circle, #0b1c2c, #050d18);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* ================= LOCK ================= */
+.lock-box {
+  text-align: center;
+  padding: 30px;
+  border-radius: 15px;
+  border: 1px solid cyan;
+  box-shadow: 0 0 20px cyan;
+}
+
+.display {
+  background: black;
+  padding: 10px;
+  margin: 20px 0;
+  letter-spacing: 10px;
+}
+
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 60px);
+  gap: 10px;
+  justify-content: center;
+}
+
+button {
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background: #1e2a38;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: cyan;
+  color: black;
+}
+
+/* ================= MAIN ================= */
+#main {
+  display: none;
+}
+
+.wrapper {
+  display: flex;
+  gap: 60px;
+  align-items: center;
+}
+
+/* FOTO */
+.photos {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.row {
+  display: flex;
+  gap: 20px;
+}
+
+.photo {
+  background: pink;
+  padding: 8px;
+  border-radius: 5px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.photo img {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+}
+
+.rotate-left { transform: rotate(-8deg); }
+.rotate-right { transform: rotate(8deg); }
+
+.photo:hover {
+  transform: scale(1.1) rotate(0deg);
+}
+
+/* CARD */
+.card {
+  position: relative;
+  padding: 25px;
+  width: 360px;
+  border: 2px solid #ff3c7f;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255,60,127,0.6);
+}
+
+.label {
+  position: absolute;
+  top: -12px;
+  right: 10px;
+  background: #ff3c7f;
+  padding: 3px 10px;
+  font-size: 12px;
+  transform: rotate(5deg);
+}
+
+.title {
+  color: cyan;
+}
+
+.card p {
+  line-height: 1.6;
+}
+
+/* POPUP */
+#popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+#popup img {
+  width: 320px;
+  border-radius: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= BRANKAS ================= -->
+<div class="lock-box" id="lock">
+  <h2>BRANKAS RAHASIA 🔐</h2>
+  <p>Status: Terkunci</p>
+
+  <div class="display" id="display"></div>
+
+  <div class="keypad">
+    <button onclick="press(1)">1</button>
+    <button onclick="press(2)">2</button>
+    <button onclick="press(3)">3</button>
+    <button onclick="press(4)">4</button>
+    <button onclick="press(5)">5</button>
+    <button onclick="press(6)">6</button>
+    <button onclick="press(7)">7</button>
+    <button onclick="press(8)">8</button>
+    <button onclick="press(9)">9</button>
+    <button onclick="clearPin()">Hapus</button>
+    <button onclick="press(0)">0</button>
+    <button onclick="check()">OK</button>
+  </div>
+</div>
+
+<!-- ================= ISI ================= -->
+<div id="main">
+  <div class="wrapper">
+
+    <!-- FOTO -->
+    <div class="photos">
+      <div class="row">
+        <div class="photo rotate-left" onclick="openImg(this)">
+          <img src="foto.jpg">
+        </div>
+        <div class="photo rotate-right" onclick="openImg(this)">
+          <img src="foto2.jpg">
+        </div>
+      </div>
+
+      <div class="row" style="justify-content:center;">
+        <div class="photo rotate-left" onclick="openImg(this)">
+          <img src="foto3.jpg">
+        </div>
+      </div>
+    </div>
+
+    <!-- UCAPAN -->
+    <div class="card">
+      <div class="label">Atiqah Sabrina Darmawan 💖</div>
+
+      <h3 class="title">HAPPY LEVEL UP DAY!</h3>
+
+      <p>
+        TARGET: MY FAVORITE HUMAN<br>
+        STATUS: BERHASIL DIBUKA (AMAN)<br><br>
+
+        Selamat ulang tahun ya ❤️<br><br>
+
+        Terima kasih sudah selalu ada buat aku,
+        selalu sabar, dan selalu jadi yang terbaik.<br><br>
+
+        Aku harap kamu selalu bahagia ✨<br><br>
+
+        <b>I love you 💕</b>
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<!-- POPUP -->
+<div id="popup" onclick="closeImg()">
+  <img id="popup-img">
+</div>
+
+<script>
+let pin = "";
+let correctPin = "2004"; // GANTI
+
+function press(num) {
+  pin += num;
+  document.getElementById("display").innerText = "* ".repeat(pin.length);
+}
+
+function clearPin() {
+  pin = "";
+  document.getElementById("display").innerText = "";
+}
+
+function check() {
+  if (pin === correctPin) {
+    document.getElementById("lock").style.display = "none";
+    document.getElementById("main").style.display = "block";
+  } else {
+    alert("Kode salah 😜");
+    clearPin();
+  }
+}
+
+function openImg(el) {
+  let img = el.querySelector("img");
+  document.getElementById("popup").style.display = "flex";
+  document.getElementById("popup-img").src = img.src;
+}
+
+function closeImg() {
+  document.getElementById("popup").style.display = "none";
+}
+</script>
+
+</body>
+</html>
